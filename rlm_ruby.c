@@ -243,7 +243,6 @@ static int ruby_function(REQUEST *request, int func, VALUE module, const char *f
     }
 
     /* Calling corresponding ruby function, passing request and catching result */
-    rb_respond_to(module,func)?radlog(L_DBG,"Function responds on this module"):radlog(L_ERR,"Function  does not responds on this module");
     rb_result = rb_funcall(module,func,1, rb_request);
     
     /* Checking result, it can be array of type [result, [array of reply pairs],[array of config pairs]],
@@ -251,7 +250,7 @@ static int ruby_function(REQUEST *request, int func, VALUE module, const char *f
      */
     if (TYPE(rb_result)==T_ARRAY)
     {
-	if (!FIXNUM_P(rb_result))
+	if (!FIXNUM_P(rb_ary_entry(rb_result, 0)))
 	{
 	    radlog(L_ERR,"First element of an array was not a FIXNUM(Which has to be a return_value)");
 	}
