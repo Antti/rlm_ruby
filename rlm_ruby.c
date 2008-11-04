@@ -438,7 +438,8 @@ static int ruby_detach(void *instance)
     /* Default return value is failure */
     return_value = -1;
     free(instance);
-
+    ruby_finalize();
+    ruby_cleanup(0);
     radlog(L_DBG, "ruby_detach done");
     
     //Ok, we cheat, and returon ok value for now :)

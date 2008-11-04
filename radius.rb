@@ -22,7 +22,4 @@ module Radiusd
 	return Radiusd::RLM_MODULE_NOOP
     end
 
-
 end
-
-#Radiusd::instantiate("a")
