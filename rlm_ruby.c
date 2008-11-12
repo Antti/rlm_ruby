@@ -405,6 +405,7 @@ static int ruby_instantiate(CONF_SECTION *conf, void **instance)
     RLM_RUBY_LOAD(checksimul);
     RLM_RUBY_LOAD(preproxy);
     RLM_RUBY_LOAD(postproxy);
+    RLM_RUBY_LOAD(postauth);
     RLM_RUBY_LOAD(detach);
 
     *instance=data;
@@ -461,7 +462,8 @@ static int ruby_detach(void *instance)
 module_t rlm_ruby = {
 	RLM_MODULE_INIT,
 	"ruby",
-	RLM_TYPE_THREAD_SAFE,		/* type */
+//	RLM_TYPE_THREAD_SAFE,		/* type */
+	RLM_TYPE_THREAD_UNSAFE,		/* type, ok, let's be honest, MRI is not yet treadsafe */
 	ruby_instantiate,		/* instantiation */
 	ruby_detach,			/* detach */
 	{
